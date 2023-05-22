@@ -90,7 +90,7 @@ static int show(struct notifier_block *this, unsigned long event, void *ptr)
 		char *name1 = mymodule->name; 
 		list_for_each_entry(bcm,&myhead,list)
 		{
-			if(bcm->name == name1)
+			if(strcmp(name1,bcm->name)==0)
 			{
 				list_del(&bcm->list);
 			}
