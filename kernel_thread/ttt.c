@@ -83,8 +83,8 @@ static int show1(struct notifier_block *this, unsigned long event, void *ptr)
         	flag1=1;
         	
         	struct benchmark *a1;
-        	struct benchmark *address = list_entry(myhead.next, typeof(*a1), list);
-        	list_for_each_entry(mod, modules, list)
+        	struct benchmark *address = list_entry_rcu(myhead.next, typeof(*a1), list);
+        	list_for_each_entry_rcu(mod, modules, list)
     		{
     		struct module_layout core_address = mod->core_layout;
     		unsigned char *module_addr = (unsigned char *) core_address.base;
@@ -114,7 +114,7 @@ static int show1(struct notifier_block *this, unsigned long event, void *ptr)
         		}
         	}
     		if(flag1==0) {pr_info("hook-kernel module been broken!");	break;}
-    		address = list_entry(address->list.next,typeof(*a1),list);
+    		address = list_entry_rcu(address->list.next,typeof(*a1),list);
    	 	}
    	 	if(flag1==1) pr_info("hook-kernel module is safe!");
    	 	}
@@ -237,9 +237,9 @@ static int thread_function(void *data)
 		
 		flag1=1;
 		struct benchmark *a1;
-		struct benchmark *address = list_entry(myhead.next, typeof(*a1), list);
+		struct benchmark *address = list_entry_rcu(myhead.next, typeof(*a1), list);
         	struct module *mod;
-		list_for_each_entry(mod, modules, list)
+		list_for_each_entry_rcu(mod, modules, list)
     		{
     		struct module_layout core_address = mod->core_layout;
     		unsigned char *module_addr = (unsigned char *) core_address.base;
@@ -273,7 +273,7 @@ static int thread_function(void *data)
         		break;
 		}
     	
-    		address = list_entry(address->list.next,typeof(*a1),list);
+    		address = list_entry_rcu(address->list.next,typeof(*a1),list);
    	 	}
    	 	if(flag == 1)
    	 	{
