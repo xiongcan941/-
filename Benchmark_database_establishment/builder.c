@@ -83,6 +83,7 @@ static int show(struct notifier_block *this, unsigned long event, void *ptr)
 	        num++;
 		list_add_tail(&a->list,&myhead);
 	}
+	synchronize_rcu();
 	mutex_unlock(&mymodule_mutex);
 	}
 	else if(event == 12)
@@ -98,6 +99,7 @@ static int show(struct notifier_block *this, unsigned long event, void *ptr)
 				list_del_rcu(&bcm->list);
 			}
 		}
+		synchronize_rcu();
 		mutex_unlock(&mymodule_mutex);
 	}
 	return 0;
