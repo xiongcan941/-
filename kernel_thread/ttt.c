@@ -84,6 +84,7 @@ static int show1(struct notifier_block *this, unsigned long event, void *ptr)
         	
         	struct benchmark *a1;
         	struct benchmark *address = list_entry_rcu(myhead.next, typeof(*a1), list);
+		preempt_disable();
         	list_for_each_entry_rcu(mod, modules, list)
     		{
     		struct module_layout core_address = mod->core_layout;
@@ -116,6 +117,7 @@ static int show1(struct notifier_block *this, unsigned long event, void *ptr)
     		if(flag1==0) {pr_info("hook-kernel module been broken!");	break;}
     		address = list_entry_rcu(address->list.next,typeof(*a1),list);
    	 	}
+		preempt_enable();
    	 	if(flag1==1) pr_info("hook-kernel module is safe!");
    	 	}
 		return 0;
@@ -239,6 +241,7 @@ static int thread_function(void *data)
 		struct benchmark *a1;
 		struct benchmark *address = list_entry_rcu(myhead.next, typeof(*a1), list);
         	struct module *mod;
+		preempt_disable();
 		list_for_each_entry_rcu(mod, modules, list)
     		{
     		struct module_layout core_address = mod->core_layout;
@@ -272,9 +275,9 @@ static int thread_function(void *data)
         		pr_info("module has benn broken!");
         		break;
 		}
-    	
     		address = list_entry_rcu(address->list.next,typeof(*a1),list);
    	 	}
+		preempt_enable();
    	 	if(flag == 1)
    	 	{
    	 		pr_info("module is safe!");
