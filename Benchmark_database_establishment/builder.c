@@ -42,7 +42,7 @@ void *buf;
 unsigned int num ;
 static struct list_head myhead; 
 SHA256_CTX sha256;
-
+DEFINE_MUTEX(mymodule_mutex);
 extern int register_test_notifier(struct notifier_block*);
 extern int unregister_test_notifier(struct notifier_block*);
 
@@ -55,7 +55,8 @@ static int show(struct notifier_block *this, unsigned long event, void *ptr)
         struct module *mymodule = ptr;
         struct benchmark *a;
         struct benchmark b;
-        list_for_each_entry(mod, moduless, list)
+	mutex_lock(&mymodule_mutex);
+        list_for_each_entry_rcu(mod, moduless, list)
         {
         	a = (struct benchmark *)vzalloc(sizeof(b));
     		struct module_layout core_address = mod->core_layout;
@@ -82,19 +83,22 @@ static int show(struct notifier_block *this, unsigned long event, void *ptr)
 	        num++;
 		list_add_tail(&a->list,&myhead);
 	}
+	mutex_unlock(&mymodule_mutex);
 	}
 	else if(event == 12)
 	{
 		struct benchmark * bcm;
 		struct module *mymodule = ptr;
 		char *name1 = mymodule->name; 
-		list_for_each_entry(bcm,&myhead,list)
+		mutex_lock(&mymodule_mutex);
+		list_for_each_entry_rcu(bcm,&myhead,list)
 		{
 			if(strcmp(name1,bcm->name)==0)
 			{
-				list_del(&bcm->list);
+				list_del_rcu(&bcm->list);
 			}
 		}
+		mutex_unlock(&mymodule_mutex);
 	}
 	return 0;
 }
