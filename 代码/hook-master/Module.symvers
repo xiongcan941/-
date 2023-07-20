@@ -1,0 +1,4 @@
+0x00000000	register_test_notifier	/home/xc/hook-master/hooking	EXPORT_SYMBOL	
+0x00000000	close	/home/xc/hook-master/hooking	EXPORT_SYMBOL	
+0x00000000	unregister_test_notifier	/home/xc/hook-master/hooking	EXPORT_SYMBOL	
+0x00000000	open	/home/xc/hook-master/hooking	EXPORT_SYMBOL	

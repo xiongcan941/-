@@ -1,0 +1,1 @@
+cmd_/home/xc/hook-master/hooking.ko := ld -r -m elf_x86_64 --build-id=sha1  -T scripts/module.lds -o /home/xc/hook-master/hooking.ko /home/xc/hook-master/hooking.o /home/xc/hook-master/hooking.mod.o;  true
