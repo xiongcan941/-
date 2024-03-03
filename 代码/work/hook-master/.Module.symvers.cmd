@@ -1,0 +1,1 @@
+cmd_/home/xc/work/hook-master/Module.symvers := sed 's/ko$$/o/' /home/xc/work/hook-master/modules.order | scripts/mod/modpost  -a   -o /home/xc/work/hook-master/Module.symvers -e -i Module.symvers   -T -

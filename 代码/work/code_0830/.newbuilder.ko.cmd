@@ -1,0 +1,1 @@
+cmd_/home/xc/code_0830/newbuilder.ko := ld -r -m elf_x86_64 --build-id=sha1  -T scripts/module.lds -o /home/xc/code_0830/newbuilder.ko /home/xc/code_0830/newbuilder.o /home/xc/code_0830/newbuilder.mod.o;  true

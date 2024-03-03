@@ -1,0 +1,1 @@
+cmd_/home/xc/work/Benchmark_database_establishment/builder.mod := { echo  /home/xc/work/Benchmark_database_establishment/builder.o;  echo; } > /home/xc/work/Benchmark_database_establishment/builder.mod
